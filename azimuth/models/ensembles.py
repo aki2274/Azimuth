@@ -189,7 +189,7 @@ def GBR_stacking(y_train, X_train, X_test):
                   'min_samples_leaf': [1, 2, 3],  # ,5, 7],
                   'max_features': [1.0, 0.5, 0.3, 0.1]}
 
-    est = en.GradientBoostingRegressor(loss='ls', n_estimators=100)
+    est = en.GradientBoostingRegressor(loss="squared_error", n_estimators=100)
     clf = GridSearchCV(est, param_grid, n_jobs=3, verbose=1, cv=20, scoring=spearman_scoring).fit(X_train, y_train.flatten())
     # clf.fit(X_train, y_train.flatten())
     return clf.predict(X_test)

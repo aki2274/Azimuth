@@ -195,7 +195,7 @@ def adaboost_setup(learn_options, num_estimators=100, max_depth=3, learning_rate
     learn_options['adaboost_version'] = 'python'  # "R" or "python"
 
     if 'adaboost_loss' not in list(learn_options.keys()) and model == "AdaBoostRegressor":
-        learn_options['adaboost_loss'] = 'ls'  # alternatives: "lad", "huber", "quantile", see scikit docs for details
+        learn_options['adaboost_loss'] = "squared_error" # alternatives: "lad", "huber", "quantile", see scikit docs for details
     if 'adaboost_alpha' not in list(learn_options.keys()):
         learn_options['adaboost_alpha'] = 0.5  # this parameter is only used by the huber and quantile loss functions.
 
@@ -511,7 +511,7 @@ def save_final_model_V3(filename=None, include_position=True, learn_options=None
                              "include_gene_effect": False,
                              "include_drug": False,
                              "include_sgRNAscore": False,
-                             'adaboost_loss': 'ls',
+                             'adaboost_loss': "squared_error",
                              # main "ls", alternatives: "lad", "huber", "quantile", see scikit docs for details
                              'adaboost_alpha': 0.5,
                              # this parameter is only used by the huber and quantile loss functions.
@@ -540,7 +540,7 @@ def save_final_model_V3(filename=None, include_position=True, learn_options=None
                              "include_gene_effect": False,
                              "include_drug": False,
                              "include_sgRNAscore": False,
-                             'adaboost_loss': 'ls',
+                             'adaboost_loss': "squared_error",
                              # main "ls", alternatives: "lad", "huber", "quantile", see scikit docs for details
                              'adaboost_alpha': 0.5,
                              # this parameter is only used by the huber and quantile loss functions.
@@ -704,11 +704,11 @@ if __name__ == '__main__':
                      "training_metric": 'spearmanr',
                      "NDGC_k": 10,
                      "cv": "gene",
-                     "adaboost_loss": 'ls',
+                     "adaboost_loss": "squared_error",
                      "include_gene_effect": False,
                      "include_drug": False,
                      "include_sgRNAscore": False,
-                     'adaboost_loss': 'ls',
+                     'adaboost_loss': "squared_error",
                      # main "ls", alternatives: "lad", "huber", "quantile", see scikit docs for details
                      'adaboost_alpha': 0.5,  # this parameter is only used by the huber and quantile loss functions.
                      'adaboost_CV': False
