@@ -1,4 +1,4 @@
-import pkg_resources
+import importlib
 
 import azimuth.predict as pd
 import copy
@@ -593,17 +593,22 @@ def predict(seq, aa_cut=None, percent_peptide=None, model=None, model_file=None,
         assert np.all(np.isreal(percent_peptide)), "percent_peptide needs to be a real number"
 
     if model_file is None:
-        if np.any(percent_peptide == -1) or (percent_peptide is None and aa_cut is None):
+        if (percent_peptide is not None and np.any(percent_peptide == -1)) or \
+           (percent_peptide is None and aa_cut is None):
             print("No model file specified, using V3_model_nopos")
             model_name = 'V3_model_nopos.pickle'
         else:
             print("No model file specified, using V3_model_full")
             model_name = 'V3_model_full.pickle'
 
-        model_file = os.path.join('saved_models', model_name)
-        print(model_file)
-        with pkg_resources.resource_stream(__package__, model_file) as f:
-            model = pickle.load(f, encoding='bytes')
+        # パッケージ内の saved_models/<model_name> を指す抽象パス
+        # __package__ はこのコードを含むモジュールのパッケージ名
+        rel_path = importlib.resources.files(__package__) / 'saved_models' / model_name
+        print(os.path.join('saved_models', model_name))  # 旧来の出力を維持したい場合の表示
+
+    # 直接バイナリオープンして pickle.load
+    with rel_path.open('rb') as f:
+        model = pickle.load(f, encoding='bytes')
 
     if model is None:
         with open(model_file, 'rb') as f:

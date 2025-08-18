@@ -1,5 +1,5 @@
 import pandas
-import pkg_resources
+import importlib
 
 from . import util
 # import matplotlib.pyplot as plt
@@ -130,9 +130,11 @@ def combine_organisms(human_data, mouse_data):
 
 def read_V1_data(data_file, learn_options, AML_file=None):
     if data_file is None:
-        data_file = pkg_resources.resource_filename(__name__, "data/V1_data.xlsx")
+         data_file = importlib.resources.files(__name__) / "data" / "V1_data.xlsx"
+
     if AML_file is None:
-        AML_file = pkg_resources.resource_filename(__name__, "data/V1_suppl_data.txt")
+        #"data/V1_suppl_data.txt"
+        AML_file = importlib.resources.files(__name__) / "data" / "V1_suppl_data.txt"
 
     human_data = pandas.read_excel(data_file, sheet_name=0, index_col=[0, 1])
     mouse_data = pandas.read_excel(data_file, sheet_name=1, index_col=[0, 1])
@@ -230,7 +232,7 @@ def read_xu_et_al(data_file, learn_options=None, verbose=True, subsetting='ours'
 
 def read_V2_data(data_file, learn_options=None, verbose=True):
     if data_file is None:
-        data_file = pkg_resources.resource_filename(__name__, "data/V2_data.xlsx")
+        data_file = importlib.resources.files(__name__) / "data" / "V2_data.xlsx"
 
     # to compare
     # import predict as pr; a1, g1, t1, X1, Y1 = pr.data_setup()

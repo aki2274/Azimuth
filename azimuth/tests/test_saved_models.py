@@ -1,4 +1,4 @@
-import pkg_resources
+import importlib
 
 import azimuth
 import azimuth.model_comparison
@@ -16,7 +16,7 @@ class SavedModelTests(unittest.TestCase):
     """
 
     def test_predictions_nopos(self):
-        with pkg_resources.resource_stream('azimuth', os.path.join("tests", "1000guides.csv")) as f:
+        with (importlib.resources.files('azimuth') / 'tests' / '1000guides.csv').open('rb') as f:
             df = pandas.read_csv(f, index_col=0)
         predictions = azimuth.model_comparison.predict(np.array(df['guide'].values), None, None)
 
@@ -31,7 +31,7 @@ class SavedModelTests(unittest.TestCase):
         self.assertTrue(np.allclose(predictions, df['truth nopos'].values, atol=1e-3))
 
     def test_predictions_pos(self):
-        with pkg_resources.resource_stream('azimuth', os.path.join("tests", "1000guides.csv")) as f:
+        with (importlib.resources.files('azimuth') / 'tests' / '1000guides.csv').open('rb') as f:
             df = pandas.read_csv(f, index_col=0)
         predictions = azimuth.model_comparison.predict(np.array(df['guide'].values), np.array(df['AA cut'].values), np.array(df['Percent peptide'].values))
 
