@@ -595,16 +595,16 @@ def predict(seq, aa_cut=None, percent_peptide=None, model=None, model_file=None,
     if model_file is None:
         if (percent_peptide is not None and np.any(percent_peptide == -1)) or \
            (percent_peptide is None and aa_cut is None):
-            print("No model file specified, using V3_model_nopos")
+            #print("No model file specified, using V3_model_nopos")
             model_name = 'V3_model_nopos.pickle'
         else:
-            print("No model file specified, using V3_model_full")
+            #print("No model file specified, using V3_model_full")
             model_name = 'V3_model_full.pickle'
 
         # パッケージ内の saved_models/<model_name> を指す抽象パス
         # __package__ はこのコードを含むモジュールのパッケージ名
         rel_path = importlib.resources.files(__package__) / 'saved_models' / model_name
-        print(os.path.join('saved_models', model_name))  # 旧来の出力を維持したい場合の表示
+        #print(os.path.join('saved_models', model_name)) 
 
     # 直接バイナリオープンして pickle.load
     with rel_path.open('rb') as f:
